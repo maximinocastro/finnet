@@ -9,5 +9,5 @@ Manual para Desenvolvimento de API REST com a FINNET x BANCOS.
 * Banco do Brasil
 
 # Protheus x Finnet x Bancos
-![Protheus x Finnet x Bancos](./src/Imagem.png)
+![Protheus x Finnet x Bancos](./src/imagem.PNG)
 
