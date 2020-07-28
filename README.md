@@ -1,4 +1,4 @@
-# Manual API MultiBancos FINNET
+# Manual de Integração API MultiBancos FINNET
 Manual para Desenvolvimento de API REST com a FINNET x BANCOS.
 
 * Itaú
