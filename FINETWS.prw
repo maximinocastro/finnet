@@ -11,7 +11,7 @@
 // -----------+-------------------+--------------------------------------------------------+
 // Data       | Autor             | Descricao                                              |
 // -----------+-------------------+--------------------------------------------------------+
-// 21/08/2019 | Michael M. Castro | Rotina que Realiza a IntegraÁ„o Para FINNET            |
+// 21/08/2019 | Michael M. Castro | Rotina que Realiza a Integra√ß√£o Para FINNET            |
 // -----------+-------------------+--------------------------------------------------------+
 // #########################################################################################*/
 
@@ -45,7 +45,7 @@ Local cBanco      := ""
 //Carrega o Modelo de Dados MVC
 Local oMdlPCV := FwLoadModel("MLFINT03") 
 
-//Dados Multilaser
+//Dados cliente
 Local cEndMlt     := ""
 Local cNumMlt     := ""
 
@@ -111,7 +111,7 @@ JDados['documento_numero'] 	            := AllTrim(SE1->E1_IDCNAB)
 JDados['documento_nosso_numero'] 	    := "000" + AllTrim(SEE->EE_CODEMP) + AllTrim(SE1->E1_NUMBCO)
 
 //******************************************************************
-//Inclus„o da Nova TAG ID EMPRESA DE PARA FINNET PORTAL DE BOLETOS 
+//Inclus√£o da Nova TAG ID EMPRESA DE PARA FINNET PORTAL DE BOLETOS 
 //******************************************************************
 If lDocIdEmp  
     JDados['documento_identificador_empresa'] := SE1->E1_NUM + SE1->E1_PARCELA        
@@ -146,7 +146,7 @@ cJson := JsonPar:ToJson()
 
 cJson := EncodeUTF8(cJson)
 
-//Retira a Barra n„o pode enviar no Json
+//Retira a Barra n√£o pode enviar no Json
 cJson := StrTran(cJson,"\","")
 cJson := StrTran(cJson,"/","")
 
@@ -154,12 +154,12 @@ cJson := StrTran(cJson,"/","")
 oRestClient:SetPostParams(cJson)
 
 //*************************************
-//Tentativa de Conex„o com a Finnet
+//Tentativa de Conex√£o com a Finnet
 //*************************************
 Do While i < 3 .And. !lConexao 
 
     //*****************************************
-    //Verifica o Status do ServiÁo Finnet
+    //Verifica o Status do Servi√ßo Finnet
     //*****************************************
     oStatus:setPath("/healthcheck")
     oStatus:Get()
@@ -168,10 +168,10 @@ Do While i < 3 .And. !lConexao
     //Converte o Json em Objeto
     FWJsonDeserialize(DecodeUtf8(cRetStatus),@ObjJsStat) 
 
-    //Verifica se possui Conex„o Ativa com a Finnet
+    //Verifica se possui Conex√£o Ativa com a Finnet
     If ObjJsStat:status == "true"
 
-        lConexao := .T. //Conseguiu conex„o
+        lConexao := .T. //Conseguiu conex√£o
 
         //Grava Data e Hora do Envio
         oMdlPCV:Activate()
@@ -191,7 +191,7 @@ Do While i < 3 .And. !lConexao
         
         oMdlPCV:DeActivate()
 
-        //Realiza a Conex„o com a Finnet enviando o Json
+        //Realiza a Conex√£o com a Finnet enviando o Json
         If oRestClient:Post(aHeadStr)
             
             cGRetJson := oRestClient:GetResult()
@@ -219,8 +219,8 @@ Do While i < 3 .And. !lConexao
                 oMdlPCV:SetValue('PCVMASTER', 'PCV_CODBAR'	, cRetCBar)
                 
                 //*********************************************************
-                //*Verifica se o campo NUMBCO est· em branco para Realizar 
-                //*a GravaÁ„o do Numero Bancario do Retorno do Banco
+                //*Verifica se o campo NUMBCO est√° em branco para Realizar 
+                //*a Grava√ß√£o do Numero Bancario do Retorno do Banco
                 //*********************************************************
                 If Empty(PCV->PCV_NUMBCO)
                     cNossoNum := Val(AllTrim(ObjJsRet:Registro:Dados:documento_nosso_numero))
@@ -327,16 +327,16 @@ Do While i < 3 .And. !lConexao
 EndDo
 
 //************************************************
-//Verifica se conseguiu conex„o com a Finnet
+//Verifica se conseguiu conex√£o com a Finnet
 //************************************************
 If !lConexao
-    //Grava Data e Hora do Envio Erro de Conex„o
+    //Grava Data e Hora do Envio Erro de Conex√£o
     oMdlPCV:Activate()
     oMdlPCV:SetValue('PCVMASTER', 'PCV_DTENV'	, Date() )
     oMdlPCV:SetValue('PCVMASTER', 'PCV_HSENV'	, SubsTr(Time(),1,5) )
     oMdlPCV:SetValue('PCVMASTER', 'PCV_STATUS'	, "E")
-    oMdlPCV:SetValue('PCVMASTER', 'PCV_DESRET'	, "Falha de Conex„o" )
-    oMdlPCV:SetValue('PCVMASTER', 'PCV_LDSRET'	, "Sem Conex„o com o Servidor da Finnet, houve 3 Tentativas." )
+    oMdlPCV:SetValue('PCVMASTER', 'PCV_DESRET'	, "Falha de Conex√£o" )
+    oMdlPCV:SetValue('PCVMASTER', 'PCV_LDSRET'	, "Sem Conex√£o com o Servidor da Finnet, houve 3 Tentativas." )
 
     If oMdlPCV:VldData()
         oMdlPCV:CommitData()
@@ -350,8 +350,8 @@ If !lConexao
     
     oMdlPCV:DeActivate()
  
-    cStatWF := "Falha de Conex„o"              
-    cDescWf := "Sem Conex„o com o Servidor da Finnet, houve 3 Tentativas."
+    cStatWF := "Falha de Conex√£o"              
+    cDescWf := "Sem Conex√£o com o Servidor da Finnet, houve 3 Tentativas."
     lEnvWF  := .T.
 EndIf
 
@@ -381,7 +381,7 @@ Return
 // -----------+-------------------+--------------------------------------------------------+
 // Data       | Autor             | Descricao                                              |
 // -----------+-------------------+--------------------------------------------------------+
-// 21/08/2019 | Michael M. Castro | Rotina Converte a Data Padr„o FINNET AAAA-MM-DD        |
+// 21/08/2019 | Michael M. Castro | Rotina Converte a Data Padr√£o FINNET AAAA-MM-DD        |
 // -----------+-------------------+--------------------------------------------------------+
 // #########################################################################################*/
 Static Function ConvData(dData)
@@ -459,7 +459,7 @@ Private aErros  := {'pagador_tipo_inscricao',;
             'documento_qtde_pagamento_parcial';
             }
 
-//Verifico se a Variavel È um Objeto 
+//Verifico se a Variavel √© um Objeto 
 If Type("ObjJsRet:Erros") <> "U"     
 
     For i:= 1 To Len(aErros)
@@ -504,9 +504,9 @@ Local cBCC		:= "michael.castro@teste.com.br"
 Local cTipo	    := "T" 
 Local cMsg1     := "" 
 
-cSubject := "Titulo "+Alltrim(SM0->M0_NOME)+" n„o Integrado na Finnet"
-cCabec	 := "Titulo N„o Integrado - "+Alltrim(SM0->M0_NOME)
-cMsg1	 := "Prezados executar a integraÁ„o com a Finnet desse titulo Manual ou dentro de alguns minutos o RobÙ tentar· integrar novamente."
+cSubject := "Titulo "+Alltrim(SM0->M0_NOME)+" n√£o Integrado na Finnet"
+cCabec	 := "Titulo N√£o Integrado - "+Alltrim(SM0->M0_NOME)
+cMsg1	 := "Prezados executar a integra√ß√£o com a Finnet desse titulo Manual ou dentro de alguns minutos o Rob√¥ tentar√° integrar novamente."
 
 cHtml	:= U_MLCMX28(cCabec,cMsg1,cTipo,aDados) //Converte em HTML
 
