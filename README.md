@@ -8,6 +8,6 @@ Manual para Desenvolvimento de API REST com a FINNET x BANCOS.
 * Citibank
 * Banco do Brasil
 
-# Protheus x Bancos
-![Protheus x Bancos](./src/Api_banco.gif)
+# Protheus x Finnet x Bancos
+![Protheus x Finnet x Bancos](./src/Imagem.png)
 
